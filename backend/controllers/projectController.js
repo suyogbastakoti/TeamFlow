@@ -22,6 +22,12 @@ const createProject = async(req, res)=>{
     try {
         const {name, description} = req.body;
 
+        if(!name){
+            return res.status(400).json({
+                message: "Project name is required!"
+            });
+        }
+
         const project = await Project.create({
             name, 
             description,
@@ -40,7 +46,10 @@ const createProject = async(req, res)=>{
 
 //update project
 const updateProject = async(req, res)=>{
+    
     try {
+        const { name, description } = req.body;
+
         const project = await Project.findOneAndUpdate(
             {
                 _id: req.params.id,
@@ -56,6 +65,13 @@ const updateProject = async(req, res)=>{
                 new: true
             }
     );
+
+    //basic validation
+    if (!name) {
+    return res.status(400).json({
+        message: "Project name is required",
+    });
+    }
 
     if(!project){
         return res.status(404).json({

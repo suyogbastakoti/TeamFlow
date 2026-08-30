@@ -1,5 +1,5 @@
 import Task from "../models/Task.js";
-import Project from "../models/Projects.js";
+import Project from "../models/Project.js";
 
 
 //get tasks
@@ -25,6 +25,12 @@ const createTask = async(req, res)=>{
     try {
         const {title, description, project} = req.body;
 
+        //basic validation 
+        if(!title || !project){
+            return res.status({
+                message: "Task Title and project are required",
+            });
+        }
         const existingProject = await Project.findOne({
             _id: project,
             owner: req.user.userId,
@@ -57,6 +63,20 @@ const updateTask= async(req, res)=>{
     try {
         const {title, description, status} = req.body;
 
+        if(!title){
+            return res.status(400).json({
+                message: "Task title is required",
+            });
+        }
+
+        const validStatuses = ["todo", "in-progress", "done"];
+
+        if(status && !validStatuses.includes(status)){
+            return res.status(400).json({
+                message: "Invalid task status",
+            });
+        }
+        
         const task = await Task.findByIdAndUpdate(req.params.id, 
             {
                 title,

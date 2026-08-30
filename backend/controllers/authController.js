@@ -8,6 +8,20 @@ import jwt from "jsonwebtoken";
 const registerUser = async(req, res)=>{
     try {
         const {name, email, password} = req.body;
+        
+        //basic validation
+        if(!name || !email || !password){
+            return res.status(400).json({
+                message: "Name, email and password are required"
+            });
+        }
+
+        //password validation
+        if(password.length < 6){
+            return res.status(400).json({
+                message:"Password must be at least 6 characters",
+            });
+        }
 
         //validating existinguser
 
