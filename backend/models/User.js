@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
-//models/User.js = defines database structure
+//models/User.js = defines database structure for users
 //models = "How do we interact with MongoDB?"
 
 const userSchema = new mongoose.Schema(

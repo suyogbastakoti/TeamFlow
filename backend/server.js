@@ -4,7 +4,9 @@ import mongoose from "mongoose";
 
 
 import authRoutes from "./routes/authRoutes.js";
-import protect from "./middleware/authMiddleware.js";
+import projectRoutes from "./routes/projectRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+
 
 dotenv.config();
 
@@ -15,32 +17,21 @@ const app = express();
 //parse it so I can access it through req.body.
 app.use(express.json());
 
-//routes
+//auth routes
 app.use("/api/auth", authRoutes);
+
+//project routes
+app.use("/api/projects", projectRoutes);
+
+//task routes
+app.use("/api/tasks", taskRoutes);
 
 //test route
 app.get("/", (req, res)=>{
-    res.json({message: "TeamFlow API is running"});
-});
-
-app.get("/api/protected", protect, (req, res)=>{
     res.json({
-        message: "You accessed a protected route"
+        message: "TeamFlow API is running"
     });
 });
-
-//get route
-app.get("/api/projects", (req, res)=>{
-    res.json({
-        message: "Get all projects"
-    });
-});
-
-//post route
-app.post("/api/projects", (req, res)=>{
-    res.json({message: "Create a project"});
-});
-
 
 mongoose
     .connect(process.env.MONGO_URI)

@@ -23,8 +23,6 @@ const protect = (req, res, next)=>{
             message: "Invalid or expired token"
         });
     }
-
-    next();
 };
 
 export default protect;
