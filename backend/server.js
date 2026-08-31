@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
+import cors from "cors";
 
 
 import authRoutes from "./routes/authRoutes.js";
@@ -13,6 +14,8 @@ dotenv.config();
 //start express server
 const app = express();
 
+//allows fronted and backend to communicate running from different ports
+app.use(cors());
 //Its a middleware which tell express: When a request contains JSON data,
 //parse it so I can access it through req.body.
 app.use(express.json());
