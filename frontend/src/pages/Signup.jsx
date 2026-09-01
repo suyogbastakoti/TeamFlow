@@ -86,10 +86,17 @@ const Signup = () => {
 
         <button 
             type="submit"
-            className="text-xl font-bold bg-green-500 hover:bg-green-600 text-white p-3 hover:cursor-pointer rounded-xl shadow-md"
+            className="text-xl font-bold bg-green-500 hover:bg-green-600 text-white px-3 py-2 hover:cursor-pointer rounded-xl shadow-md"
         >
             Signup
         </button>
+
+        <span className="text-center">
+            <p>Already have an account?</p>
+            <Link to="/login">
+                <p className="underline">Login Here</p>
+            </Link>
+        </span>
 
       </form>
 
