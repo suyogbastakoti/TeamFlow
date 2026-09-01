@@ -10,6 +10,7 @@ import taskRoutes from "./routes/taskRoutes.js";
 
 
 dotenv.config();
+console.log("JWT SECRET:", process.env.JWT_SECRET);
 
 //start express server
 const app = express();

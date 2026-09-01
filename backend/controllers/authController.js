@@ -83,6 +83,8 @@ const loginUser = async(req, res)=>{
             });
         }
 
+        console.log("SECRET IN LOGIN:", process.env.JWT_SECRET);
+
         const token = jwt.sign(
             {
                 userId: user._id,
