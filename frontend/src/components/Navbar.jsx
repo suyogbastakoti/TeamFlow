@@ -1,56 +1,68 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { token, logout } = useAuth();
+
   return (
-    <nav className="flex justify-between items-center bg-lime-300 p-3">
-        {/* Logo */}
+    <nav className="bg-white border-b">
+      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
-        <h1 
-
-            className="text-3xl font-bold p-3"
-        >
-            TeamFlow
-        </h1>
-
-        {/* nav links */}
-        <div className="flex gap-4 font-semibold text-xl">
-
-            <a 
-                className="hover:underline hover:text-white"
-                href="#home"
-            >
-                Home
-            </a>
-
-            <a 
-                className="hover:underline hover:text-white"
-                href="#features"
-            >
-                Features
-            </a>
-
-        </div>
-
-        {/* buttons to redirect to login and signup */}
-
-        <div className="flex gap-4 p-3 text-xl">
-            <Link to="/login">
-                <button
-                    className="px-3 py-3 rounded-xl shadow-sm bg-green-500 hover:bg-green-600 hover:cursor-pointer text-white"
+        <div>
+            <Link
+                to="/"
+                className="text-2xl font-bold text-green-600"
                 >
-                    Login
-                </button>
+                TeamFlow
             </Link>
 
-            <Link to="/signup">
-                <button
-                    className="px-3 py-3 rounded-xl shadow-sm bg-green-500 hover:bg-green-600 hover:cursor-pointer text-white"
-                >
-                    SignUp
-                </button>
-            </Link>
         </div>
         
+        <div className="flex items-center gap-6">
+          <Link
+            to="/"
+            className="text-gray-600 hover:text-green-600"
+          >
+            Home
+          </Link>
+
+          {token ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="text-gray-600 hover:text-green-600"
+              >
+                Dashboard
+              </Link>
+
+              <button
+                type="button"
+                onClick={logout}
+                className="text-red-500 hover:text-red-600"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="text-gray-600 hover:text-green-600"
+              >
+                Login
+              </Link>
+
+              <Link
+                to="/signup"
+                className="bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
+        </div>
+
+      </div>
     </nav>
   );
 };

@@ -1,104 +1,111 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { login } = useAuth();
   const navigate = useNavigate();
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-
-      console.log(response.data);
-      localStorage.setItem("token", response.data.token);
+      await login(email, password);
 
       navigate("/dashboard");
-      
-
     } catch (error) {
       console.log(error.response?.data);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-400 flex items-center justify-center">
-      <div className="text-center w-1/2">
-        <h1 className="text-4xl mb-8 font-bold">
-          Welcome to TeamFlow's
-        </h1>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
 
-        <p className="text-xl font-bold">
-          Login Page
-        </p>
-      </div>
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-2xl shadow-md p-8">
 
-      <div className="w-1/3">
-        <form
-          onSubmit={handleLogin}
-          className="flex flex-col justify-center items-center p-12 gap-8 bg-white rounded-xl shadow-md"
-        >
-          <div className="flex items-center justify-center">
-            <label className="text-xl">
-              Email:
-            </label>
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-800">
+              Welcome to TeamFlow
+            </h1>
 
-            <input
-              type="email"
-              placeholder="Enter your email..."
-              className="border w-full rounded p-2 ml-9"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <p className="text-gray-500 mt-2">
+              Login to continue to your workspace
+            </p>
           </div>
 
-          <div className="flex items-center justify-center">
-            <label className="text-xl">
-              Password:
-            </label>
-
-            <input
-              type="password"
-              placeholder="Enter your password..."
-              className="border w-full rounded p-2 ml-2"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="text-white bg-green-500 hover:bg-green-600 hover:cursor-pointer px-3 py-2 rounded-xl shadow-md"
+          <form
+            onSubmit={handleLogin}
+            className="flex flex-col gap-5"
           >
-            Login
-          </button>
+            {/* Email */}
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="email"
+                className="font-medium text-gray-700"
+              >
+                Email
+              </label>
 
-          <span className="text-center">
-            <p>New to the platform?</p>
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter your email..."
+                className="border border-gray-300 rounded-xl p-3 outline-none focus:ring-2 focus:ring-green-400"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
 
-            <Link to="/signup">
-              <p className="underline hover:cursor-pointer">
-                Signup Here
-              </p>
+            {/* Password */}
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="password"
+                className="font-medium text-gray-700"
+              >
+                Password
+              </label>
+
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password..."
+                className="border border-gray-300 rounded-xl p-3 outline-none focus:ring-2 focus:ring-green-400"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            {/* Login button */}
+            <button
+              type="submit"
+              className="bg-green-500 text-white font-medium p-3 rounded-xl hover:bg-green-600 transition"
+            >
+              Login
+            </button>
+          </form>
+
+          <div className="text-center mt-6">
+            <p className="text-gray-500">
+              New to TeamFlow?
+            </p>
+
+            <Link
+              to="/signup"
+              className="text-green-600 font-medium hover:text-green-700"
+            >
+              Create an account
             </Link>
-          </span>
-        </form>
+          </div>
+
+        </div>
       </div>
+
     </div>
   );
 };
 
 export default Login;
-
