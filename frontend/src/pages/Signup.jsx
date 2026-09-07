@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Signup = () => {
@@ -7,6 +7,8 @@ const Signup = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
 
     const handleSubmit = async(e)=>{
         e.preventDefault();
@@ -20,6 +22,10 @@ const Signup = () => {
                 }
             );
             console.log(response.data);
+
+            alert("Account created successfully. Please login!");
+
+            navigate("/login");
             
         } catch (error) {
             console.log(error.response?.data);
