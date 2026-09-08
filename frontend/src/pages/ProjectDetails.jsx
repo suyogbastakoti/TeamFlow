@@ -465,7 +465,7 @@ const ProjectDetails = () => {
                   <div
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={() => handleDrop("in-progress")}
-                    className="bg-blue-50 rounded-2xl p-4 min-h-[500px]"
+                    className="bg-blue-50 rounded-2xl p-4 min-h-125"
                   >
 
                     <div className="flex items-center justify-between mb-4">
@@ -498,7 +498,7 @@ const ProjectDetails = () => {
                   <div
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={() => handleDrop("done")}
-                    className="bg-green-50 rounded-2xl p-4 min-h-[500px]"
+                    className="bg-green-50 rounded-2xl p-4 min-h-125"
                   >
 
                     <div className="flex items-center justify-between mb-4">
