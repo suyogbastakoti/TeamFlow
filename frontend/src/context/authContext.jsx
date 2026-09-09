@@ -11,21 +11,21 @@ export const AuthProvider = ({ children }) => {
 
   // Login user
   const login = async (email, password) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/login",
-      {
-        email,
-        password,
-      }
-    );
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_URL}/api/auth/login`,
+    {
+      email,
+      password,
+    }
+  );
 
-    const newToken = response.data.token;
+  const newToken = response.data.token;
 
-    localStorage.setItem("token", newToken);
-    setToken(newToken);
+  localStorage.setItem("token", newToken);
+  setToken(newToken);
 
-    return response.data;
-  };
+  return response.data;
+};
 
   // Logout user
   const logout = () => {

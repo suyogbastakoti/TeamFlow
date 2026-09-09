@@ -24,7 +24,7 @@ const Dashboard = () => {
     const fetchProjects = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/projects",
+          `${import.meta.env.VITE_API_URL}/api/projects`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ const Dashboard = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/projects",
+        `${import.meta.env.VITE_API_URL}/api/projects`,
         {
           name,
           description,
@@ -77,7 +77,7 @@ const Dashboard = () => {
   const handleUpdateProject = async (id) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/projects/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/projects/${id}`,
         {
           name: editingName,
           description: editingDescription,
@@ -107,7 +107,7 @@ const Dashboard = () => {
   const handleDeleteProject = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/projects/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/projects/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -125,15 +125,12 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
-
       <Navbar />
 
       <main className="flex-1">
-
         {/* Header */}
         <section className="border-b border-slate-200 bg-white">
           <div className="max-w-7xl mx-auto px-6 py-10">
-
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5">
               <div>
                 <p className="text-sm font-semibold text-green-600 uppercase tracking-wide">
@@ -159,20 +156,15 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-
           </div>
         </section>
 
         {/* Main content */}
         <section className="max-w-7xl mx-auto px-6 py-10 w-full">
-
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
             {/* Create Project */}
             <div className="lg:col-span-1">
-
               <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 sticky top-6">
-
                 <div className="mb-6">
                   <p className="text-sm font-medium text-green-600">
                     New workspace item
@@ -226,13 +218,11 @@ const Dashboard = () => {
                     + Create Project
                   </button>
                 </form>
-
               </div>
             </div>
 
             {/* Project section */}
             <div className="lg:col-span-2">
-
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-2xl font-bold">
@@ -247,7 +237,6 @@ const Dashboard = () => {
 
               {projects.length === 0 ? (
                 <div className="bg-white border border-dashed border-slate-300 rounded-2xl p-12 text-center">
-
                   <div className="text-4xl mb-4">
                     📁
                   </div>
@@ -259,21 +248,16 @@ const Dashboard = () => {
                   <p className="text-slate-500 mt-2">
                     Create your first project using the form.
                   </p>
-
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
                   {projects.map((project) => (
                     <div
                       key={project._id}
                       className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition"
                     >
-
                       {editingId === project._id ? (
-
                         <div className="space-y-4">
-
                           <div>
                             <label className="block text-sm font-medium text-slate-700 mb-2">
                               Project name
@@ -327,14 +311,10 @@ const Dashboard = () => {
                               Cancel
                             </button>
                           </div>
-
                         </div>
-
                       ) : (
-
                         <>
                           <div className="flex items-start justify-between gap-4">
-
                             <div>
                               <h3 className="text-xl font-bold">
                                 {project.name}
@@ -348,11 +328,9 @@ const Dashboard = () => {
                             <div className="w-10 h-10 rounded-xl bg-green-50 text-green-600 flex items-center justify-center font-bold">
                               {project.name?.charAt(0)?.toUpperCase()}
                             </div>
-
                           </div>
 
                           <div className="flex items-center gap-3 mt-6 pt-5 border-t border-slate-100">
-
                             <Link
                               to={`/projects/${project._id}`}
                               className="flex-1"
@@ -388,26 +366,19 @@ const Dashboard = () => {
                             >
                               Delete
                             </button>
-
                           </div>
                         </>
                       )}
-
                     </div>
                   ))}
-
                 </div>
               )}
-
             </div>
-
           </div>
         </section>
-
       </main>
 
       <Footer />
-
     </div>
   );
 };

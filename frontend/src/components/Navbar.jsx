@@ -23,7 +23,7 @@ const Navbar = () => {
           {token &&(
             <Link
             to="/"
-            className="text-gray-600 hover:text-green-600"
+            className="text-white hover:text-black"
           >
             Home
           </Link>
@@ -32,7 +32,7 @@ const Navbar = () => {
           {token && (
             <Link
               to="/dashboard"
-              className="text-gray-600 hover:text-green-600"
+              className="text-white hover:text-black"
             >
               Dashboard
             </Link>
@@ -45,7 +45,7 @@ const Navbar = () => {
             <button
               type="button"
               onClick={logout}
-              className="text-red-500 hover:text-red-600"
+              className="text-white bg-red-500 rounded-xl p-2 hover:cursor-pointer hover:bg-red-700"
             >
               Logout
             </button>

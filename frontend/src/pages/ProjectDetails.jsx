@@ -27,7 +27,7 @@ const ProjectDetails = () => {
     const fetchTasks = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/tasks/${id}`,
+          `${import.meta.env.VITE_API_URL}/api/tasks/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const ProjectDetails = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/tasks",
+        `${import.meta.env.VITE_API_URL}/api/tasks`,
         {
           title,
           description,
@@ -78,7 +78,7 @@ const ProjectDetails = () => {
   const handleUpdateTasks = async (taskId) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/tasks/${taskId}`,
+        `${import.meta.env.VITE_API_URL}/api/tasks/${taskId}`,
         {
           title: editingTitle,
           description: editingDescription,
@@ -110,7 +110,7 @@ const ProjectDetails = () => {
   const handleDeleteTasks = async (taskId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/tasks/${taskId}`,
+        `${import.meta.env.VITE_API_URL}/api/tasks/${taskId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -128,40 +128,40 @@ const ProjectDetails = () => {
 
   // Handle dropping a task into a column
   const handleDrop = async (newStatus) => {
-  if (!draggedTaskId) return;
+    if (!draggedTaskId) return;
 
-  const draggedTask = tasks.find(
-    (task) => task._id === draggedTaskId
-  );
+    const draggedTask = tasks.find(
+      (task) => task._id === draggedTaskId
+    );
 
-  if (!draggedTask) return;
+    if (!draggedTask) return;
 
-  try {
-    const response = await axios.patch(
-      `http://localhost:5000/api/tasks/${draggedTaskId}`,
-      {
-        title: draggedTask.title,
-        description: draggedTask.description,
-        status: newStatus,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/api/tasks/${draggedTaskId}`,
+        {
+          title: draggedTask.title,
+          description: draggedTask.description,
+          status: newStatus,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task._id === draggedTaskId ? response.data : task
-      )
-    );
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task._id === draggedTaskId ? response.data : task
+        )
+      );
 
-    setDraggedTaskId(null);
-  } catch (error) {
-    console.log(error.response?.data);
-  }
-};
+      setDraggedTaskId(null);
+    } catch (error) {
+      console.log(error.response?.data);
+    }
+  };
 
   // Task Card
   const renderTask = (task) => (
@@ -267,15 +267,12 @@ const ProjectDetails = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
-
       <Navbar />
 
       <main className="flex-1">
-
         {/* Project Header */}
         <section className="bg-white border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-6 py-10">
-
             <Link
               to="/dashboard"
               className="inline-flex items-center text-sm font-medium text-slate-500 hover:text-green-600"
@@ -289,7 +286,6 @@ const ProjectDetails = () => {
               </p>
 
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-
                 <div>
                   <h1 className="text-4xl font-bold mt-2">
                     Project Details
@@ -308,23 +304,17 @@ const ProjectDetails = () => {
                     {id.slice(-8)}
                   </span>
                 </div>
-
               </div>
             </div>
-
           </div>
         </section>
 
         {/* Main Content */}
         <section className="max-w-7xl mx-auto px-6 py-10 w-full">
-
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-
             {/* Create Task */}
             <div className="lg:col-span-1">
-
               <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 sticky top-6">
-
                 <p className="text-sm font-medium text-green-600">
                   New task
                 </p>
@@ -341,7 +331,6 @@ const ProjectDetails = () => {
                   onSubmit={handleCreateTask}
                   className="space-y-4"
                 >
-
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
                       Task title
@@ -378,18 +367,13 @@ const ProjectDetails = () => {
                   >
                     + Create Task
                   </button>
-
                 </form>
-
               </div>
-
             </div>
 
             {/* Kanban Board */}
             <div className="lg:col-span-3">
-
               <div className="flex items-center justify-between mb-6">
-
                 <div>
                   <h2 className="text-2xl font-bold">
                     Task Board
@@ -404,14 +388,11 @@ const ProjectDetails = () => {
                   {tasks.length}{" "}
                   {tasks.length === 1 ? "task" : "tasks"}
                 </div>
-
               </div>
 
               {/* Empty State */}
               {tasks.length === 0 ? (
-
                 <div className="bg-white border border-dashed border-slate-300 rounded-2xl p-12 text-center">
-
                   <div className="text-4xl mb-4">
                     ✅
                   </div>
@@ -423,20 +404,15 @@ const ProjectDetails = () => {
                   <p className="text-slate-500 mt-2">
                     Create your first task using the form.
                   </p>
-
                 </div>
-
               ) : (
-
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-
                   {/* TODO */}
                   <div
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={() => handleDrop("todo")}
                     className="bg-slate-100 rounded-2xl p-4 min-h-125"
                   >
-
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-bold text-slate-700">
                         TODO
@@ -458,7 +434,6 @@ const ProjectDetails = () => {
                         )
                         .map(renderTask)}
                     </div>
-
                   </div>
 
                   {/* IN PROGRESS */}
@@ -467,7 +442,6 @@ const ProjectDetails = () => {
                     onDrop={() => handleDrop("in-progress")}
                     className="bg-blue-50 rounded-2xl p-4 min-h-125"
                   >
-
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-bold text-blue-700">
                         IN PROGRESS
@@ -491,7 +465,6 @@ const ProjectDetails = () => {
                         )
                         .map(renderTask)}
                     </div>
-
                   </div>
 
                   {/* DONE */}
@@ -500,7 +473,6 @@ const ProjectDetails = () => {
                     onDrop={() => handleDrop("done")}
                     className="bg-green-50 rounded-2xl p-4 min-h-125"
                   >
-
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-bold text-green-700">
                         DONE
@@ -522,23 +494,15 @@ const ProjectDetails = () => {
                         )
                         .map(renderTask)}
                     </div>
-
                   </div>
-
                 </div>
-
               )}
-
             </div>
-
           </div>
-
         </section>
-
       </main>
 
       <Footer />
-
     </div>
   );
 };
